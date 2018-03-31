@@ -16,5 +16,8 @@ js2d.m: 2D full jittered sampling
 
 genmask.m: random generate mask for random sampling.
 
+## seismic
+ricker.m: Ricker wavelet
+
 
 snr.m: calculate the signal to noise ration (SNR) for 2D and 3D data.
