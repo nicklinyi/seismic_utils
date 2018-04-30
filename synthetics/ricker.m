@@ -1,72 +1,47 @@
-function [wavelet,tw]=ricker(dt,fdom,tlength)
-% [wavelet,tw]=ricker(dt,fdom,tlength)
-% [wavelet,tw]=ricker(dt,fdom) 
-% [wavelet,tw]=ricker(dt) 
-% 
-% RICKER returns a Ricker wavelet.
+function [w,tw] = ricker(f,dt)
+%RICKER: Ricker wavelet of central frequency f.
 %
-% dt= desired temporal sample rate
-% fdom= dominant frequency in Hz (default: 15 Hz)
-% tlength= wavelet length in seconds (default: 127*dt 
-%                                     (ie a power of 2))
-% 
-% The wavelet is generated from an analog expression for a 
-% Ricker wavelet.
-% 
-% by G.F. Margrave, May 1991
+%  [w,tw] = ricker(f,dt);
 %
-% NOTE: This SOFTWARE may be used by any individual or corporation for any purpose
-% with the exception of re-selling or re-distributing the SOFTWARE.
-% By using this software, you are agreeing to the terms detailed in this software's
-% Matlab source file.
+%  IN   f : central freq. in Hz (f <<1/(2dt) )
+%       dt: sampling interval in sec  
+%
+%  OUT  w:  the Ricker wavelet
+%       tw: axis
+%
+%  Example
+%
+%    [w,tw] = ricker(10,0.004);
+%    plot(tw,w);
+%
 
-% BEGIN TERMS OF USE LICENSE
+%  Copyright (C) 2008, Signal Analysis and Imaging Group
+%  For more information: http://www-geo.phys.ualberta.ca/saig/SeismicLab
+%  Author: M.D.Sacchi
 %
-% This SOFTWARE is maintained by the CREWES Project at the Department
-% of Geology and Geophysics of the University of Calgary, Calgary,
-% Alberta, Canada.  The copyright and ownership is jointly held by
-% its 'AUTHOR' (identified above) and the CREWES Project.  The CREWES
-% project may be contacted via email at:  crewesinfo@crewes.org
+%  This program is free software: you can redistribute it and/or modify
+%  it under the terms of the GNU General Public License as published
+%  by the Free Software Foundation, either version 3 of the License, or
+%  any later version.
 %
-% The term 'SOFTWARE' refers to the Matlab source code, translations to
-% any other computer language, or object code
+%  This program is distributed in the hope that it will be useful,
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%  GNU General Public License for more details: http://www.gnu.org/licenses/
 %
-% Terms of use of this SOFTWARE
-%
-% 1) This SOFTWARE may be used by any individual or corporation for any purpose
-%    with the exception of re-selling or re-distributing the SOFTWARE.
-%
-% 2) The AUTHOR and CREWES must be acknowledged in any resulting publications or
-%    presentations
-%
-% 3) This SOFTWARE is provided "as is" with no warranty of any kind
-%    either expressed or implied. CREWES makes no warranties or representation
-%    as to its accuracy, completeness, or fitness for any purpose. CREWES
-%    is under no obligation to provide support of any kind for this SOFTWARE.
-%
-% 4) CREWES periodically adds, changes, improves or updates this SOFTWARE without
-%    notice. New versions will be made available at www.crewes.org .
-%
-% 5) Use this SOFTWARE at your own risk.
-%
-% END TERMS OF USE LICENSE
-if(nargin<3)
-   tlength=127.*dt;
- end
- if(nargin<2)
-   fdom=15.; 
- end
-% create a time vector
-  nt=round(tlength/dt)+1;
-  tmin=-dt*round(nt/2);
-  tmax=-tmin-dt;
-  tw= tmin:dt:tmax;
-% create the wavelet
-  pf=pi^2*fdom^2;
-  wavelet=(1-2.*pf*tw.^2).*exp(-pf*tw.^2);
-% normalize
-% generate a refenence sinusoid at the dominant frequency
-  refwave=sin(2*pi*fdom*tw);
-  reftest=convz(refwave,wavelet);
-  fact=max(refwave)/max(reftest);
-	wavelet=wavelet*fact;
+
+
+ nw=2.2/f/dt;
+ nw=2*floor(nw/2)+1;
+ nc=floor(nw/2);
+ w = zeros(nw,1);
+
+ k=[1:1:nw]';
+
+ alpha = (nc-k+1).*f*dt*pi;
+ beta=alpha.^2;
+ w = (1.-beta.*2).*exp(-beta);
+
+  if nargout>1;
+    tw = -(nc+1-[1:1:nw])*dt;
+  end
