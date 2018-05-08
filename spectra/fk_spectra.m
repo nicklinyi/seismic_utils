@@ -1,4 +1,4 @@
-function [S,k,f] = fk_spectra(d,dt,dx,L)
+function [S,k,f] = fk_spectra(d,dt,dx,L,normflag)
 %FK_SPECTRA: FK spectrum of a seismic gather.
 %
 %  [S,k,f] = fk_spectra(d,dt,dx,L);
@@ -8,6 +8,10 @@ function [S,k,f] = fk_spectra(d,dt,dx,L)
 %       dx:     spatial increment between traces 
 %       L:      apply spectral smoothing using a separable
 %               2D Hamming window of LxL samples
+%       normflag: 
+%                =1: output normarlized frequency and normarlized wavenumber
+%                =0(default): output regular frequency and wavebumber
+%       
 %
 %  OUT  S:      FK spectrum
 %       f:      freq axis in Hz
@@ -21,6 +25,9 @@ function [S,k,f] = fk_spectra(d,dt,dx,L)
 %    [d,h,t] = linear_events; dt = t(2)-t(1); dx = h(2)-h(1); 
 %    [S,k,f] = fk_spectra(d,dt,dx,6); imagesc(k,f,S);
 %
+%  Copyright (C) 2018, IGGCAS
+%  Author: Yi Lin
+%  E-mail: linyihanchuan@gmail.com
 %
 %  Copyright (C) 2008, Signal Analysis and Imaging Group
 %  For more information: http://www-geo.phys.ualberta.ca/saig/SeismicLab
@@ -37,7 +44,9 @@ function [S,k,f] = fk_spectra(d,dt,dx,L)
 %  GNU General Public License for more details: http://www.gnu.org/licenses/
 %
 %     
-
+if nargin < 5
+    normflag = 0;
+end
 
 [nt,nx]=size(d);
 
@@ -49,7 +58,12 @@ function [S,k,f] = fk_spectra(d,dt,dx,L)
  S = conv2(S,H,'same');
  S = S(nf/2:nf,:);
  
- f = (0:1:nf/2)/nf/dt;
- k = (-nk/2+1:1:nk/2)/nk/dx;
+ if normflag   
+     f = linspace(0,0.5,nf/2+1);
+     k = linspace(-0.5,0.5,nk);
+ else
+     f = (0:1:nf/2)/nf/dt;
+     k = (-nk/2+1:1:nk/2)/nk/dx;
+ end
 
  return;
