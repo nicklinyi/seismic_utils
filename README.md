@@ -17,6 +17,8 @@ Seismic Utils in Matlab
 
 - [sf_read.m](https://github.com/nicklinyi/seismic_utils/tree/master/sf_read.m): read a binary data
 
+- [tr_eq.m](https://github.com/nicklinyi/seismic_utils/tree/master/tr_eq.m): apply trace equalisation to a seismic data
+
 
 
 
