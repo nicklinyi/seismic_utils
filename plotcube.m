@@ -1,6 +1,7 @@
 function cc = plotcube( data, pars )
-%PLOTCUBE 此处显示有关此函数的摘要
-%   此处显示详细说明
+% PLOTCUBE plot a 4D dataset, same way like Madagascar
+% Copyright (C) 2018, Yi Lin
+% Email: linyihanchuan@gmail.com
 % framex, framey, framez
  [ny, nx, nz] = size(data);
 
