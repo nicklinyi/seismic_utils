@@ -5,7 +5,9 @@ function [dout] = tr_eq(d);
 % OUT:
 %    dout: output trace-equlised data
 % Reference:
-% https://wiki.seg.org/wiki/Relative_trace_balancing
+%  1. https://wiki.seg.org/wiki/Relative_trace_balancing
+%  2. A. Frank Linville and Robert A. Meek (1995). ”A procedure for optimally 
+%     removing localized coherent noise.” GEOPHYSICS, 60(1), 191-203. Eq (4)-(5)
 % Example:
 %   dout = tr_eq(d);
 %
@@ -15,9 +17,9 @@ function [dout] = tr_eq(d);
 
 [nt,~] = size(d);
 
-tmp = rms(d);
+tmp = rms(d); % eq. (4)
 tmp1 = repmat(tmp,nt,1);
-dout = d./tmp1;
+dout = d./tmp1; % eq. (5)
 
 end
 
