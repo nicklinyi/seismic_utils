@@ -3,6 +3,8 @@ Seismic Utils in Matlab
 
 - [boxPlot.m](https://github.com/nicklinyi/seismic_utils/tree/master/boxPlot.m): plot a box in an image
 
+- [fkfilter.m](https://github.com/nicklinyi/seismic_utils/tree/master/fkfilter.m): F-K filtering of a seismic data
+
 - [jittered_sampling.m](https://github.com/nicklinyi/seismic_utils/tree/master/jittered_sampling.m): 1D JITTERED_SAMPLING
 
 - [js2d.m](https://github.com/nicklinyi/seismic_utils/tree/master/js2d.m): 2D full jittered sampling
