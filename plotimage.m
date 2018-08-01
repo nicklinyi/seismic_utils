@@ -23,6 +23,11 @@ end
 if ~isfield(pars,'filename')
     pars.filename = sprintf('%s', inputname(1));  
 end
+
+if ~isfield(pars,'color')
+    pars.color = false;  
+end
+
 set(gca,'TickDir','out')
 set(gca,'FontSize',8);
 ax = gca;
@@ -36,7 +41,7 @@ else
 end
 
 % print(pars.filename,'-dpdf','-r600','-cmyk');
-print(pars.filename,'-dtiff','-r600','-cmyk');
+%print(pars.filename,'-dtiff','-r600','-cmyk');
 
 end
 
